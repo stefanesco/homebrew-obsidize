@@ -2,24 +2,24 @@ class Obsidize < Formula
   desc "Claude to Obsidian converter"
   homepage "https://github.com/stefanesco/obsidize"
   license "AGPL-3.0"
-  version "0.1.74-alpha"
+  version "0.1.76-alpha"
 
   on_macos do
     on_arm do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.74-alpha/obsidize-0.1.74-alpha-macos-aarch64.tar.gz"
-      sha256 "6307c999d07914290cc38ef1482521464c1ef6b47fcf2a449f6a27a243cfb1ff"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.76-alpha/obsidize-0.1.76-alpha-macos-aarch64.tar.gz"
+      sha256 "068413cf1f5448edcfb4e1a303e0e25019cef98069fff842320bb19d070e6954"
     end
     on_intel do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.74-alpha/obsidize-0.1.74-alpha-macos-x64.tar.gz"
-      sha256 "b28c2f1ace58a9f41c1d15d14de814be1977145546edac2eae3d952a5a68834d"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.76-alpha/obsidize-0.1.76-alpha-macos-x64.tar.gz"
+      sha256 "533f5ade782504528d1fb8192be3a1fa68754ee77ccb30550e4a89f783d14970"
     end
   end
 
   
   on_linux do
     on_intel do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.74-alpha/obsidize-0.1.74-alpha-linux-amd64.tar.gz"
-      sha256 "748e111538d64ed63b36e3dd8a1e2ec05c5a7eee2684db8f60b66e1cefca880d"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.76-alpha/obsidize-0.1.76-alpha-linux-amd64.tar.gz"
+      sha256 "5824651e1378e6f6529c334dbfe96ecfabfb5969220137d84a6ddceef93582a9"
     end
   end
   
@@ -40,11 +40,11 @@ class Obsidize < Formula
         
         if (libexec/"bin/obsidize").exist?
           # Create wrapper for JLink package
-          bin.write "obsidize", <<~EOS
+          (bin/"obsidize").write <<~EOS
             #!/bin/bash
             exec "#{libexec}/bin/obsidize" "$@"
           EOS
-          chmod 0755, bin/"obsidize"
+          (bin/"obsidize").chmod 0755
         else
           odie "No jlink executable found in macOS x86 package"
         end
@@ -55,11 +55,11 @@ class Obsidize < Formula
       
       if (libexec/"bin/obsidize").exist?
         # Create wrapper for JLink package
-        bin.write "obsidize", <<~EOS
+        (bin/"obsidize").write <<~EOS
           #!/bin/bash
           exec "#{libexec}/bin/obsidize" "$@"
         EOS
-        chmod 0755, bin/"obsidize"
+        (bin/"obsidize").chmod 0755
       else
         odie "No jlink executable found in Linux package"
       end
