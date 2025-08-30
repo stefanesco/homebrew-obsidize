@@ -1,29 +1,69 @@
 class Obsidize < Formula
-  desc "A simple Clojure CLI tool"
+  desc "Claude to Obsidian converter"
   homepage "https://github.com/stefanesco/obsidize"
   license "AGPL-3.0"
-  version "0.1.7-alpha"
+  version "0.1.74-alpha"
 
   on_macos do
     on_arm do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.7-alpha/obsidize-arm64-macOS.tar.gz"
-      sha256 "c9feb7c71d0e8bd97237a57a704ae4348d953a0422f70aa507e49a6d2408ffa8"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.74-alpha/obsidize-0.1.74-alpha-macos-aarch64.tar.gz"
+      sha256 "6307c999d07914290cc38ef1482521464c1ef6b47fcf2a449f6a27a243cfb1ff"
     end
     on_intel do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.7-alpha/obsidize-amd64-macOS.tar.gz"
-      sha256 "61c5337bc910046cd7e498bd5cd792e840a45c58f093fcfcaf1868489f74e3b5"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.74-alpha/obsidize-0.1.74-alpha-macos-x64.tar.gz"
+      sha256 "b28c2f1ace58a9f41c1d15d14de814be1977145546edac2eae3d952a5a68834d"
     end
   end
 
+  
   on_linux do
     on_intel do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.7-alpha/obsidize-amd64-Linux.tar.gz"
-      sha256 "e495950493b391b5f977722ec616b9960f51af70f190de78714b45450187023a"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.74-alpha/obsidize-0.1.74-alpha-linux-amd64.tar.gz"
+      sha256 "748e111538d64ed63b36e3dd8a1e2ec05c5a7eee2684db8f60b66e1cefca880d"
     end
   end
+  
 
   def install
-    bin.install "obsidize"
+    if OS.mac?
+      if Hardware::CPU.arm?
+        # macOS ARM64: Native executable package (direct binary)
+        if (buildpath/"bin/obsidize").exist?
+          # Install native binary directly
+          bin.install "bin/obsidize"
+        else
+          odie "No native executable found in macOS ARM64 package"
+        end
+      else
+        # macOS x86: JLink runtime package (includes JRE + application)
+        libexec.install Dir["*"]
+        
+        if (libexec/"bin/obsidize").exist?
+          # Create wrapper for JLink package
+          bin.write "obsidize", <<~EOS
+            #!/bin/bash
+            exec "#{libexec}/bin/obsidize" "$@"
+          EOS
+          chmod 0755, bin/"obsidize"
+        else
+          odie "No jlink executable found in macOS x86 package"
+        end
+      end
+    else
+      # Linux: JLink runtime package (includes JRE + application)
+      libexec.install Dir["*"]
+      
+      if (libexec/"bin/obsidize").exist?
+        # Create wrapper for JLink package
+        bin.write "obsidize", <<~EOS
+          #!/bin/bash
+          exec "#{libexec}/bin/obsidize" "$@"
+        EOS
+        chmod 0755, bin/"obsidize"
+      else
+        odie "No jlink executable found in Linux package"
+      end
+    end
   end
 
   test do
