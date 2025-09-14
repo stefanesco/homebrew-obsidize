@@ -2,24 +2,24 @@ class Obsidize < Formula
   desc "Claude to Obsidian converter"
   homepage "https://github.com/stefanesco/obsidize"
   license "AGPL-3.0"
-  version "0.1.76-alpha"
+  version "0.1.79"
 
   on_macos do
     on_arm do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.76-alpha/obsidize-0.1.76-alpha-macos-aarch64.tar.gz"
-      sha256 "068413cf1f5448edcfb4e1a303e0e25019cef98069fff842320bb19d070e6954"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.79/obsidize-0.1.79-macos-aarch64.tar.gz"
+      sha256 "6e34e99308bffb8096da7aba6e633293618c1c7543dc7644739c0f89f4bb8abe"
     end
     on_intel do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.76-alpha/obsidize-0.1.76-alpha-macos-x64.tar.gz"
-      sha256 "533f5ade782504528d1fb8192be3a1fa68754ee77ccb30550e4a89f783d14970"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.79/obsidize-0.1.79-macos-x64.tar.gz"
+      sha256 "57dbacc1be9de0a110f6869eef7da5b379eb787aad3f9ea829afb754b7c834bb"
     end
   end
 
   
   on_linux do
     on_intel do
-      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.76-alpha/obsidize-0.1.76-alpha-linux-amd64.tar.gz"
-      sha256 "5824651e1378e6f6529c334dbfe96ecfabfb5969220137d84a6ddceef93582a9"
+      url "https://github.com/stefanesco/obsidize/releases/download/v0.1.79/obsidize-0.1.79-linux-amd64.tar.gz"
+      sha256 "a12cc43b259d33d9b38f49f5578dac315a71bf78e2a57d39b98433690b7cd623"
     end
   end
   
